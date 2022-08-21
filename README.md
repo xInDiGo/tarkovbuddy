@@ -1,2 +1,1 @@
-# tarkovbuddy
-0.0.1.0
+This is my learning exercise called tarkovbuddy. It likely won't work
