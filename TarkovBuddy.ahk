@@ -4,7 +4,7 @@
 
 SetWorkingDir %A_ScriptDir%
 IniWrite, 0.0.1.0, tbsettings.ini, MyTarkovBuddyVersNum, version
-;FileAppend, [MyTarkovBuddyVersNum] Version=0.0.1.0, tbsettings.ini
+
 
 
 ids:={}
@@ -58,7 +58,7 @@ Gui, Show, h325 , InDiGo's TarkovBuddy BETA
 return
 
 
-
+/* ; OCR DISABLED
 ^L::
 if (dis = 1){
 	highest :=
@@ -89,7 +89,7 @@ else{
 	msgbox, Please check OCR
 	return
 }
-
+*/
 
 Disable:
 Gui, Submit, NoHide
