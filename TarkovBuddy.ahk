@@ -1,6 +1,6 @@
 #SingleInstance, Force
 #Include JSON.ahk
-;#include <Vis2>
+;#include <Vis2> ;https://github.com/xInDiGo/Vis2
 
 SetWorkingDir %A_ScriptDir%
 IniWrite, 0.0.1.0, tbsettings.ini, MyTarkovBuddyVersNum, version
@@ -14,7 +14,7 @@ For key, value in query().value.data.items{
 }
 
 Gui,+AlwaysOnTop
-Gui, Add, CheckBox, gDisable vOCR, Use Character Recgognition?
+;Gui, Add, CheckBox, gDisable vOCR, Use Character Recgognition?
 Gui, Add, ComboBox, Sort x10 y20 w160 h250 gDataCalc vItemData,% String
 Gui, Add, Text, x177 y16 w25, Number of items
 Gui, Add, Edit, x220 y20 w25 Number vCount, 1
@@ -106,6 +106,7 @@ else{
 	return
 
 }
+
 
 RemoveToolTip:
 ToolTip
