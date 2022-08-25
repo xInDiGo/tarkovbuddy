@@ -1,11 +1,13 @@
 #SingleInstance, Force
-#Include JSON.ahk
-;#include <Vis2>
+#include JSON.ahk
+;#include <Vis2> ;https://github.com/iseahound/Vis2
+
 
 SetWorkingDir %A_ScriptDir%
-IniWrite, 0.0.1.0, tbsettings.ini, MyTarkovBuddyVersNum, version
 
-
+IniWrite, 0.0.1.01, tbsettings.ini, MyTarkovBuddyVersNum, version
+IniRead, IntelligenceLevel,  tbsettings.ini, IntelligenceLevel, Level
+IniRead, HideoutManagementLevel,  tbsettings.ini, HideoutManagementLevel, Level
 
 ids:={}
 For key, value in query().value.data.items{
@@ -14,48 +16,48 @@ For key, value in query().value.data.items{
 }
 
 Gui,+AlwaysOnTop
-;Gui, Add, CheckBox, gDisable vOCR, Use Character Recgognition?
-Gui, Add, ComboBox, Sort x10 y20 w160 h250 gDataCalc vItemData,% String
-Gui, Add, Text, x177 y16 w25, Number of items
-Gui, Add, Edit, x220 y20 w25 Number vCount, 1
-Gui, Add, Text, x10 y50 w50 , ItemName:
-Gui, Add, Text, x80 y50 w150 vMyTruName,
-Gui, Add, Text, x10 y70 w50 , Item ID:
-Gui, Add, Text, x80 y70 w150 vMyItemID,
-Gui, Add, Text, x10  y90 w65, Trader Name:
-Gui, Add, Text, x80 y90 w60 vTraderName,
-Gui, Add, Text, x10  y110 w65, Trader Price:
-Gui, Add, Text, x80 y110 w60 vTraderPrice,
-Gui, Add, Text, x10 y130 w65, Flea Price:
-Gui, Add, Text, x80 y130 w60 vFleaPrice,
+Gui, Add, GroupBox, xm ym w300 h110, --ITEM DATA--
+Gui, Add, ComboBox, Sort xp+4 yp+20 w290 gDataCalc vItemData, % String
+Gui, Add, Text, xp yp+25 w150 vMyTruName, Item Name
+Gui, Add, Text, xp yp+15, Trader Name:
+Gui, Add, Text, xp+70 yp w60 vTraderName,
+Gui, Add, Text, xp-70 yp+15 , Trader Price:
+Gui, Add, Text, xp+70 yp w60 vTraderPrice,
+Gui, Add, Text, xp-70 yp+15 , Avg 24hr Flea Price:
+Gui, Add, Text, xp+105 yp w60 vFleaPrice,
 
-Gui, Add, Text, x195 y90 w70, My Flea Price:
-Gui, Add, Edit, x190 y105 w60 number vMyFleaPrice,
-Gui, Add, Button, x250 y104 gButton, Ok
-Gui, Add, Text, x190 y130 w65, My Flea Fea:
-Gui, Add, Text, x200 y145 w60 vCustomFleaFea,
-Gui, Add, Text, x200 y160 w65, Sub Total:
-Gui, Add, Text, x200 y175 w60 vdif,
+Gui, Add, GroupBox, xm ym+110 w145 h105, --FLEA DATA--
+Gui, Add, Text, xp+4 yp+20, My Flea Price:
+Gui, Add, Edit, xp+70 yp-2 w65 vMyFleaPrice,
+Gui, Add, Text, xp-70 yp+27, # of items:
+Gui, Add, Edit, xp+50 yp-4 w30 Number vCount, 1
+Gui, Add, Button, xp+30 yp-1 w56 gButton, Ok
+Gui, Add, Text, xp-80 yp+25, My Flea Fea:
+Gui, Add, Text, xp+70 yp w60 vCustomFleaFea,
+Gui, Add, Text, xp-70 yp+20 , Sub Total:
+Gui, Add, Text, xp+70 yp w60 vdif,
 
-Gui, Add, Text, x10 y130 w80, Flea Fee:
-Gui, Add, Text, x80 y130 w60 vFleaFee,
+Gui, Add, GroupBox, xm+155 ym+110 w145 h105, --BEST PROFITS--
+Gui, Add, Text, xp+4 yp+20, Sell To:
+Gui, Add, Text, xp+45 yp w75 vBTraderName,
+Gui, Add, Text, xp-45 yp+20, Trader Price:
+Gui, Add, Text, xp+65 yp w75 vTprice,
+Gui, Add, Text, xp-65 yp+20, Flea Fee:
+Gui, Add, Text, xp+55 yp w75 vbff,
+Gui, Add, Text, xp-55 yp+20 , Total Profits:
+Gui, Add, Text, xp+65 yp w80 vBprofit,
 
-Gui, Add, Text, x10 y150 w150, IntelCenterLevel:
-Gui, Add, ComboBox, x100 y145 w35 vICL, 1|2|3||
-Gui, Add, Text, x10 y170 w150, HideoutManagementLevel:
-Gui, Add, ComboBox, x145 y165 w35 h135 vHML, 1|2|3|4|5|6|7|8|9|10||11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51
+Gui, Add, GroupBox, xm ym+215 w300 h100, --SETTINGS--
+Gui, Add, Text, xp+4 yp+20 , IntelCenterLevel:
+Gui, Add, DropDownList, xp+83 yp-3 w35 gSaveInt vICL Choose%IntelligenceLevel%, % ListGen(3)
+Gui, Add, Text, xp-84 yp+25 , HideoutManagementLevel:
+Gui, Add, DropDownList, xp+130 yp-3 w36 gSaveHM vHML Choose%HideoutManagementLevel%, % ListGen(51)
+Gui, Add, Text, xp-130 yp+22 w150 vMyItemID,
+Gui, Add, Checkbox, yp+18 gDisable vOCR, Use Character Recgognition? ; Disabled until I can manage different screen resolutions
+GuiControl, Disable, OCR ; Disabled until I can manage different screen resolutions
 
-Gui, Add, Text, x75 y190 w100, ---BEST PROFITS---
-Gui, Add, Text, x10  y215 w80, Trader:
-Gui, Add, Text, x80 y215 w150 vBTraderName,
-Gui, Add, Text, x10  y235 w80, Price:
-Gui, Add, Text, x80 y235 w150 vTprice,
-Gui, Add, Text, x10 y255 w80, Flea Fee:
-Gui, Add, Text, x80 y255 w100 vbff,
-Gui, Add, Text, x10 y275 w100, Total Profits:
-Gui, Add, Text, x80 y275 w100 vBprofit,
-Gui, Show, h325 , InDiGo's TarkovBuddy BETA
-return
+Gui, Show,, InDiGo's TarkovBuddy BETA
+Return
 
 
 /*
@@ -90,7 +92,6 @@ else{
 	return
 }
 */
-
 
 Disable:
 Gui, Submit, NoHide
@@ -145,16 +146,26 @@ GuiControl,, dif, % ((MyFleaPrice*Count) - cff)
 ;
 if highest["priceRUB"]*Count > ((MyFleaPrice*Count) - cff){
 	GuiControl,,BTraderName, % highest["vendor","name"]
-	GuiControl,,TPrice,% highest["priceRUB"] " x " count " = " (highest["priceRUB"]*count) " RUB"
+	GuiControl,,TPrice,% highest["priceRUB"] " x " count
 	GuiControl,,bff, No Fea
 	GuiControl,,bprofit, % (highest["priceRUB"]*count) " RUB"
 }
 else{
 	GuiControl,,BTraderName, Flea Market
-	GuiControl,,TPrice, % MyFleaPrice " x " count " = " (MyFleaPrice*count) " RUB"
+	GuiControl,,TPrice, % MyFleaPrice " x " count
 	GuiControl,,bff, % cff
 	GuiControl,,bprofit, % ((MyFleaPrice*count) - cff)
 }
+return
+
+SaveInt:
+Gui, Submit, Nohide
+IniWrite, %ICL%, %A_ScriptDir%\tbsettings.ini, IntelligenceLevel, Level
+return
+
+SaveHM:
+Gui, Submit, Nohide
+IniWrite, %HML%, %A_ScriptDir%\tbsettings.ini, HideoutManagementLevel, Level
 return
 
 ^R::
@@ -162,6 +173,15 @@ Reload
 
 GuiClose:
 ExitApp
+
+
+ListGen(num:=""){
+	Loop %num%{
+		;msgbox % A_Index
+		MyListNum .= A_Index "|"
+	}
+	Return MyListNum
+}
 
 Query(myid="", mycount="", myicl="", myhml="", myfp="")
 {
