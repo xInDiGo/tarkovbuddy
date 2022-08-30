@@ -7,7 +7,7 @@ FormatTime, Time,, Time
 
 Global DebugMode = 1 ;Toggles the debugger -- Set to 1 for window or 0 for no window.
 
-Global MyExt = 0 ; Extension setting -- Set to 1 for ahk extension, 0 for exe extension
+Global MyExt = 1 ; Extension setting -- Set to 1 for ahk extension, 0 for exe extension
 
 Global ext := ex(MyExt) ; Uses extension manager function to set ext to an extension
 
